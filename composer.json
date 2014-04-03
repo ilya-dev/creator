@@ -1,0 +1,24 @@
+{
+    "name": "ilya/creator",
+    "description": "An example of automatic dependency resolution in PHP",
+    "require-dev": {
+        "phpspec/phpspec": "2.0.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ilya S",
+            "email": "public.ilya.s@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Creator\\": "src/Creator/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "testing/"
+        ]
+    }
+}
