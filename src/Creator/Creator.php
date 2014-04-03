@@ -5,6 +5,19 @@ use ReflectionClass, ReflectionParameter, ReflectionException;
 class Creator {
 
     /**
+     * Makes it easier to use resolve()
+     *
+     * @param  dynamic
+     * @return mixed
+     */
+    public static function create()
+    {
+        $instance = new static;
+
+        return call_user_func_array([$instance, 'resolve'], func_get_args());
+    }
+
+    /**
      * Resolve all dependencies and return a new instance
      *
      * @param  string $class
