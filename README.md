@@ -4,6 +4,8 @@ Creator
 [![Build Status](https://travis-ci.org/ilya-dev/creator.svg?branch=master)](https://travis-ci.org/ilya-dev/creator)
 
 Thin Reflection API wrapper that allows you to easily instantiate new objects.
+It will automatically read the constructor dependencies and inject them. 
+
 
 ```php
 use Creator\Creator;
