@@ -40,8 +40,7 @@ class Creator {
             return new $class;
         }
 
-        $parameters   = $constructor->getParameters();
-        $dependencies = $this->resolveDependencies($parameters);
+        $dependencies = $this->resolveDependencies($constructor->getParameters());
 
         return $reflector->newInstanceArgs($dependencies);
     }
