@@ -81,7 +81,7 @@ class Creator {
     {
         if ( ! $parameter->isDefaultValueAvailable())
         {
-            $message = "Unable to resolve \${$parameter->getName()}";
+            $message = 'Unable to resolve '.$parameter->getName();
 
             throw new ReflectionException($message);
         }
@@ -97,7 +97,14 @@ class Creator {
      */
     protected function isClassTypeHint(ReflectionParameter $parameter)
     {
-        return $parameter->getClass() instanceof ReflectionClass;
+        try
+        {
+            return ($parameter->getClass() instanceof ReflectionClass);
+        }
+        catch (ReflectionException $exception)
+        {
+            return false;
+        }
     }
 
     /**
@@ -108,7 +115,14 @@ class Creator {
      */
     protected function resolveClassTypeHint(ReflectionParameter $parameter)
     {
-        return $this->resolve($parameter->getClass()->getName());
+        try
+        {
+            return $this->resolve($parameter->getClass()->getName());
+        }
+        catch (ReflectionException $exception)
+        {
+            return $this->resolvePrimitive($parameter);
+        }
     }
 
 }

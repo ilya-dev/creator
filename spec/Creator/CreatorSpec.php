@@ -40,6 +40,12 @@ class CreatorSpec extends ObjectBehavior {
              ->shouldBeAnInstanceOf($class);
     }
 
+    function it_resolves_class_type_hints_with_default_parameters()
+    {
+        $this->resolve($class = 'Testing\ClassTypeHintsDefaults')
+             ->shouldBeAnInstanceOf($class);
+    }
+
     function it_resolves_nested_class_type_hints()
     {
         $this->resolve($class = 'Testing\NestedDependencies')
