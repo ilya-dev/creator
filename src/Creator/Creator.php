@@ -12,9 +12,7 @@ class Creator {
      */
     public static function create()
     {
-        $instance = new static;
-
-        return call_user_func_array([$instance, 'resolve'], func_get_args());
+        return \call_user_func_array([new static, 'resolve'], \func_get_args());
     }
 
     /**
@@ -37,7 +35,7 @@ class Creator {
 
         $constructor = $reflector->getConstructor();
 
-        if (is_null($constructor))
+        if (\is_null($constructor))
         {
             return new $class;
         }
