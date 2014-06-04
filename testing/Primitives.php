@@ -5,4 +5,3 @@ class Primitives {
     public function __construct($foo, $bar, $baz) {}
 
 }
-

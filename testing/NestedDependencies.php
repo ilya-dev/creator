@@ -5,4 +5,3 @@ class NestedDependencies {
     public function __construct(ClassTypeHints $foo) {}
 
 }
-
