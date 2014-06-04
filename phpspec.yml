@@ -4,5 +4,5 @@ suites:
     creator_suite:
         namespace: Creator
         src_path: source
-        spec_path: specs
+        spec_path: tests
         spec_prefix: Specs
