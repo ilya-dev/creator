@@ -1,4 +1,4 @@
-<?php namespace Testing;
+<?php namespace Creator\Testing;
 
 class Primitives {
 

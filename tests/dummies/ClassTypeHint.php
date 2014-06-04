@@ -1,8 +1,8 @@
-<?php namespace Testing;
+<?php namespace Creator\Testing;
 
 use stdClass;
 
-class ClassTypeHints {
+class ClassTypeHint {
 
     public function __construct(stdClass $foo) {}
 
