@@ -1,7 +1,6 @@
 <?php namespace spec\Creator;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class CreatorSpec extends ObjectBehavior {
 
