@@ -5,21 +5,21 @@ use ReflectionClass, ReflectionParameter, ReflectionException;
 class Creator {
 
     /**
-     * Makes it easier to use resolve()
+     * Static alias to the resolve method.
      *
-     * @param  dynamic
+     * @param dynamic
      * @return mixed
      */
     public static function create()
     {
-        return \call_user_func_array([new static, 'resolve'], \func_get_args());
+        return call_user_func_array([new static, 'resolve'], func_get_args());
     }
 
     /**
-     * Resolve all dependencies and return a new instance
+     * Attempt to instantiate a given class by resolving its dependencies.
      *
-     * @param  string $class
      * @throws ReflectionException
+     * @param string $class
      * @return mixed
      */
     public function resolve($class)
@@ -28,78 +28,74 @@ class Creator {
 
         if ( ! $reflector->isInstantiable())
         {
-            $message = "Class {$class} is not instantiable";
-
-            throw new ReflectionException($message);
+            throw new ReflectionException("Class {$class} is not instantiable.");
         }
 
-        $constructor = $reflector->getConstructor();
-
-        if (\is_null($constructor))
+        if (is_null($constructor = $reflector->getConstructor()))
         {
             return new $class;
         }
 
-        $dependencies = $this->resolveDependencies($constructor->getParameters());
-
-        return $reflector->newInstanceArgs($dependencies);
+        return $reflector->newInstanceArgs(
+            $this->resolveDependencies($constructor->getParameters())
+        );
     }
 
     /**
-     * Resolve a given array of dependencies
+     * Attempt to resolve all constructor's dependencies.
      *
-     * @param  array $parameters
+     * @param array $dependencies
      * @return array
      */
-    protected function resolveDependencies(array $parameters)
+    protected function resolveDependencies(array $dependencies)
     {
-        $dependencies = [];
+        $arguments = [];
 
-        foreach ($parameters as $parameter)
+        foreach ($dependencies as $dependency)
         {
-            if ($this->isClassTypeHint($parameter))
+            if ($this->isClassTypeHint($dependency))
             {
-                $dependencies[] = $this->resolveClassTypeHint($parameter);
+                $arguments[] = $this->resolveClassTypeHint($dependency);
+
+                continue;
             }
-            else
-            {
-                $dependencies[] = $this->resolvePrimitive($parameter);
-            }
+
+            $arguments[] = $this->resolvePrimitive($dependency);
         }
 
-        return $dependencies;
+        return $arguments;
     }
 
     /**
-     * Resolve a given dependency of a primitive type
+     * Resolve a given dependency of a primitive type.
      *
-     * @param  ReflectionParameter $parameter
      * @throws ReflectionException
+     * @param ReflectionParameter $dependency
      * @return mixed
      */
-    protected function resolvePrimitive(ReflectionParameter $parameter)
+    protected function resolvePrimitive(ReflectionParameter $dependency)
     {
-        if ( ! $parameter->isDefaultValueAvailable())
+        if ( ! $dependency->isDefaultValueAvailable())
         {
-            $message = 'Unable to resolve '.$parameter->getName();
+            $dependency = $dependency->getName();
 
-            throw new ReflectionException($message);
+            throw new ReflectionException("Unable to resolve {$dependency}.");
         }
 
-        return $parameter->getDefaultValue();
+        return $dependency->getDefaultValue();
     }
 
     /**
-     * Determine whether a parameter has a type hint of a non-primitive type
+     * Determine whether a dependency has a non-primitive type hint.
      *
-     * @param  ReflectionParameter $parameter
+     * @param ReflectionParameter $dependency
      * @return boolean
      */
-    protected function isClassTypeHint(ReflectionParameter $parameter)
+    protected function isClassTypeHint(ReflectionParameter $dependency)
     {
         try
         {
-            return ($parameter->getClass() instanceof ReflectionClass);
+            return $dependency->getClass() instanceof ReflectionClass;
         }
         catch (ReflectionException $exception)
         {
@@ -108,22 +104,21 @@ class Creator {
     }
 
     /**
-     * Resolve a given dependecy of a non-primitive type
+     * Resolve a given dependecy of a non-primitive type.
      *
-     * @param  ReflectionParameter $parameter
+     * @param ReflectionParameter $dependency
      * @return mixed
      */
-    protected function resolveClassTypeHint(ReflectionParameter $parameter)
+    protected function resolveClassTypeHint(ReflectionParameter $dependency)
     {
         try
         {
-            return $this->resolve($parameter->getClass()->getName());
+            return $this->resolve($dependency->getClass()->getName());
         }
         catch (ReflectionException $exception)
         {
-            return $this->resolvePrimitive($parameter);
+            return $this->resolvePrimitive($dependency);
         }
     }
 
 }
-
