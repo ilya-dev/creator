@@ -3,8 +3,10 @@ Creator
 
 [![Build Status](https://travis-ci.org/ilya-dev/creator.svg?branch=master)](https://travis-ci.org/ilya-dev/creator)
 
-Thin Reflection API wrapper that allows you to easily instantiate new objects.
-It will automatically read the constructor dependencies and inject them. 
+Creator is a thin Reflection API wrapper that allows you to easily instantiate classes.
+
+
+It will automatically read the constructor's dependencies and inject them into a new instance. 
 
 
 ```php
@@ -14,16 +16,16 @@ class Foo {
 
     public function __construct(AnotherClass $foo, $bar = 42)
     {
-       // ....
+       # something here
     }
   
 }
 
-// do not want to instantiate it manually? here is what you can do
-
-Creator::make('Foo') // => new instance of Foo 
+# do not want to instantiate it manually? here is what you can do
+$foo = Creator::make('Foo'); # => new instance of Foo 
 ```
 
 # Additional information
 
-The code is licensed under the MIT license, you can talk to me on twitter [@ilya_s_dev](https://twitter.com/ilya_s_dev)
+Creator is licensed under the MIT license.
+
