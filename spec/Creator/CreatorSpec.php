@@ -9,7 +9,7 @@ class CreatorSpec extends ObjectBehavior {
         $this->shouldHaveType('Creator\Creator');
     }
 
-    function it_throws_an_exception_if_the_given_class_is_not_instantiable()
+    function it_throws_an_exception_if_class_is_not_instantiable()
     {
         $this->shouldThrow('ReflectionException')
              ->duringResolve('Testing\NotInstantiable');
@@ -21,7 +21,7 @@ class CreatorSpec extends ObjectBehavior {
              ->shouldBeAnInstanceOf($class);
     }
 
-    function it_resolves_dependencies_of_a_primitive_type()
+    function it_resolves_dependencies_of_primitive_types()
     {
         $this->resolve($class = 'Testing\PrimitivesWithDefaults')
              ->shouldBeAnInstanceOf($class);
@@ -39,17 +39,16 @@ class CreatorSpec extends ObjectBehavior {
              ->shouldBeAnInstanceOf($class);
     }
 
-    function it_resolves_class_type_hints_with_default_parameters()
+    function it_resolves_class_type_hints_with_defaults()
     {
         $this->resolve($class = 'Testing\ClassTypeHintsDefaults')
              ->shouldBeAnInstanceOf($class);
     }
 
-    function it_resolves_nested_class_type_hints()
+    function it_resolves_nested_dependencies()
     {
         $this->resolve($class = 'Testing\NestedDependencies')
              ->shouldBeAnInstanceOf($class);
     }
 
 }
-
