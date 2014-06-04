@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Creator\\": "src/Creator"
+            "Creator\\": "source/Creator"
         },
         "classmap": ["testing"]
     }

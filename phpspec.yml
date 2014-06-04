@@ -1,1 +1,8 @@
 formatter.name: pretty
+
+suites:
+    creator_suite:
+        namespace: Creator
+        src_path: source
+        spec_path: specs
+        spec_prefix: Specs

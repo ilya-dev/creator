@@ -1,4 +1,4 @@
-<?php namespace spec\Creator;
+<?php namespace Specs\Creator;
 
 use PhpSpec\ObjectBehavior;
 
